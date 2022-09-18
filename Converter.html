@@ -1,0 +1,43 @@
+<input type="text" id="user" placeholder="enter text" />
+
+<button onclick="UpdateStatus()">
+Click
+</button>
+<br/>
+<b>Response Status :</b>
+<div id="result">
+</div>
+<br/>
+<b>JSON Object :</b>
+<div id="result_json">
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+
+  function UpdateStatus(){
+var query=$("#user").val();
+alert(query);
+$.ajax({
+    //url: "https://en.wikipedia.org/w/api.php?action=query&list=random&rnlimit=5&format=json",
+    url: "https://en.wikipedia.org/w/api.php?action=parse&page="+query+"&prop=wikitext&formatversion=2&format=json",
+	dataType: "jsonp",
+
+    success: function( data ) {
+        console.log( data );
+		 $.ajax({
+            url: "localhost/save.php",
+	dataType: "jsonp",
+            
+            success: function(data) {
+                console.log(data);
+                alert("Saved in database")
+            }
+        });
+    }
+
+});
+}
+
+
+</script>
